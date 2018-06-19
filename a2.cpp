@@ -4,6 +4,14 @@ using namespace std;
 
 // Function prototypes
 void displayMenu();
+void createDirectory();
+void createNewRegularFiles();
+void createChildProcess();
+void createChildProcessShadow();
+void readFromFile();
+void writeToFile();
+void printFileStatus();
+void printDirectoryListing();
 
 int main()
 {
@@ -29,6 +37,30 @@ void displayMenu() {
 	
 	cin >> c;
 	switch (c) {
-
-	}
+		case 1: createDirectory(); break;
+		case 2: createNewRegularFiles(); break;
+		case 3: createChildProcess(); break;
+		case 4: createChildProcessShadow(); break;
+		case 5: readFromFile(); break;
+		case 6: writeToFile(); break;
+		case 7: printFileStatus(); break;
+		case 8: printDirectoryListing(); break;
+		case 9: return;
+	} // End switch
 } // End void displayMenu()
+
+void createDirectory() {}
+
+void createNewRegularFiles() {}
+
+void createChildProcess() {}
+
+void createChildProcessShadow() {}
+
+void readFromFile() {}
+
+void writeToFile() {}
+
+void printFileStatus() {}
+
+void printDirectoryListing() {}
