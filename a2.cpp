@@ -25,8 +25,10 @@ void displayMenu() {
 	cout << "Please select an option: ";
 	
 	cin >> c;
+	
+	cout << c << endl;
 	switch (c) {
-		case 1: createDirectory(); break;
+		case 1: createDirectory();
 		case 2: createNewRegularFiles(); break;
 		case 3: createChildProcess(); break;
 		case 4: createChildProcessShadow(); break;
@@ -38,7 +40,9 @@ void displayMenu() {
 	} // End switch
 } // End void displayMenu()
 
-void createDirectory() {}
+void createDirectory() {
+	
+	cout << "CREATE DIR" << endl;}
 
 void createNewRegularFiles() {}
 
