@@ -26,10 +26,8 @@ void displayMenu() {
 		<< "9. Exit" << endl << endl;
 
 	cout << "Please select an option: ";
-
-	cin >> c;
 	
-	// Switch for the selection made by the user
+	cin >> c;
 	switch (c) {
 
 	}
