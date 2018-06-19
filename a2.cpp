@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include <iostream>
 
 using namespace std;
@@ -6,7 +5,7 @@ using namespace std;
 // Function prototypes
 void displayMenu();
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
 	displayMenu();
 	return 0;
