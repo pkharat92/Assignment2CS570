@@ -1,17 +1,7 @@
 #include <iostream>
+#include "a2.h"
 
 using namespace std;
-
-// Function prototypes
-void displayMenu();
-void createDirectory();
-void createNewRegularFiles();
-void createChildProcess();
-void createChildProcessShadow();
-void readFromFile();
-void writeToFile();
-void printFileStatus();
-void printDirectoryListing();
 
 int main()
 {
