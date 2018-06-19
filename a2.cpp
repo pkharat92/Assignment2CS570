@@ -26,17 +26,16 @@ void displayMenu() {
 	
 	cin >> c;
 	
-	cout << c << endl;
 	switch (c) {
-		case 1: createDirectory();
-		case 2: createNewRegularFiles(); break;
-		case 3: createChildProcess(); break;
-		case 4: createChildProcessShadow(); break;
-		case 5: readFromFile(); break;
-		case 6: writeToFile(); break;
-		case 7: printFileStatus(); break;
-		case 8: printDirectoryListing(); break;
-		case 9: return;
+		case '1': createDirectory();
+		case '2': createNewRegularFiles(); break;
+		case '3': createChildProcess(); break;
+		case '4': createChildProcessShadow(); break;
+		case '5': readFromFile(); break;
+		case '6': writeToFile(); break;
+		case '7': printFileStatus(); break;
+		case '8': printDirectoryListing(); break;
+		case '9': return;
 	} // End switch
 } // End void displayMenu()
 
