@@ -55,4 +55,20 @@ void writeToFile() {}
 
 void printFileStatus() {}
 
-void printDirectoryListing() {}
+void printDirectoryListing() {
+	DIR *dir;
+	struct dirent *ent;
+	
+	if ((dir = opendir ("c:\\src\\")) != NULL) {
+		// Print all files and directories within directory
+		while ((ent = readdir (dir)) != NULL) {
+			printf ("%s\n", ent->d_name);
+		} // End while
+		closedir (dir);
+	}
+	else {
+		// Could not open directory
+		perror("Directory not found");
+		return EXIT_FAILURE;
+	} // End if
+} // End printDirectoryListing()
