@@ -9,7 +9,6 @@ void displayMenu();
 int _tmain(int argc, _TCHAR* argv[])
 {
 	displayMenu();
-	getchar();
 	return 0;
 } // End int main()
 
@@ -29,6 +28,8 @@ void displayMenu() {
 
 	cout << "Please select an option: ";
 
+	cin >> c;
+	
 	// Switch for the selection made by the user
 	switch (c) {
 
