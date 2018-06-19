@@ -27,7 +27,7 @@ void displayMenu() {
 	cin >> c;
 	
 	switch (c) {
-		case '1': createDirectory();
+		case '1': createDirectory(); break;
 		case '2': createNewRegularFiles(); break;
 		case '3': createChildProcess(); break;
 		case '4': createChildProcessShadow(); break;
