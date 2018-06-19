@@ -1,4 +1,3 @@
-#include <iostream>
 #include "a2.h"
 
 using namespace std;
