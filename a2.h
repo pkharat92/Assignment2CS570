@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string.h>
 #include <stdlib.h>
+#include <dirent.h>
 
 // Function prototypes
 void displayMenu();
