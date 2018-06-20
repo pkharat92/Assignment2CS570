@@ -99,9 +99,11 @@ int readFromFile() {
   cout << "Please enter filename: ";
   cin >> filename;
 
+  const char * c = filename.c_str();
+
   // Open file
   ifstream infile;
-  infile.open(filename);
+  infile.open(c);
 
   // Fail check
   if(infile.fail()) {
