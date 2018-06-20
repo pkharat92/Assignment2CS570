@@ -13,7 +13,7 @@ void createDirectory();
 void createNewRegularFiles();
 void createChildProcess();
 void createChildProcessShadow();
-void readFromFile();
+int readFromFile();
 void writeToFile();
 int printFileStatus();
 int printDirectoryListing();
