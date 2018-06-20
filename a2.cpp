@@ -88,7 +88,42 @@ void readFromFile() {}
 
 void writeToFile() {}
 
-void printFileStatus() {}
+int printFileStatus() {
+  struct stat FileAttrib;
+  string filename;
+
+  cout << "\nPlease enter the filename: ";
+  cin >> filename;
+
+  const char * c = filename.c_str();
+ 
+  if(c == NULL)
+  {
+    printf("Argument missing!\n");
+    exit(10);
+  }
+
+  if (stat(c, &FileAttrib) < 0)
+    printf("\nFile Error Message = %s\n", strerror(errno));
+  else {
+    printf("\nI-node number: %ld\n", (long) FileAttrib.st_ino);
+    printf("Mode: %lo (octal)\n", (unsigned long) FileAttrib.st_mode);
+    printf("Link count: %ld\n", (long) FileAttrib.st_nlink);
+    printf("Ownership: UID=%ld   GID=%ld\n", 
+      (long) FileAttrib.st_uid, (long) FileAttrib.st_gid);
+    printf("Preferred I/O block size: %ld bytes\n",
+      (long) FileAttrib.st_blksize);
+    printf("File size: %lld bytes\n",
+      (long long) FileAttrib.st_size);
+    printf("Blocks allocated: %lld\n",
+      (long long) FileAttrib.st_blocks);
+    printf("Last status change: %s", ctime(&FileAttrib.st_ctime));
+    printf("Last file access: %s", ctime(&FileAttrib.st_atime));
+    printf("Last file modification: %s", ctime(&FileAttrib.st_mtime));
+  }
+  
+  return 0;
+}
 
 int printDirectoryListing() {
 	DIR *dir;
