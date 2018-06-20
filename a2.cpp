@@ -26,6 +26,8 @@ void displayMenu() {
 	
 	cin >> c;
 	
+	cout << endl;
+	
 	switch (c) {
 		case '1': createDirectory(); break;
 		case '2': createNewRegularFiles(); break;
@@ -41,7 +43,18 @@ void displayMenu() {
 
 void createDirectory() {
 	
-	cout << "CREATE DIR" << endl;}
+	std::string pathName;
+	
+	cout << "Please type the name of the directory: ";
+	
+	cin >> pathName;
+	
+	if(mkdir(pathName.c_str(),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1)//creating a directory
+	{
+		cerr << "Error: "<< strerror(errno) << endl;
+		exit(1);
+	}	
+}
 
 void createNewRegularFiles() {}
 
