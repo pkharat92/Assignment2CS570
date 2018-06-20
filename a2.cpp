@@ -64,7 +64,7 @@ void displayMenu() {
 		cout << endl;
 	}
 	
-	cout << endl << "Have a nice day" << endl;
+	cout << "Have a nice day" << endl;
 } // End void displayMenu()
 
 void createDirectory() {
@@ -90,18 +90,19 @@ int createNewRegularFiles() {
 
   cout << "Please enter filename: ";
   cin >> filename;
-
   const char * c = filename.c_str();
-
   ofstream outfile(c);
 
-  cin >> str;
+  cout << "\nType what you want to write to file:\n\n";
+  cin.ignore();
+  getline(cin, str);
+  cout << "\n";
   outfile << str << "\n";
-
   outfile.close();
 
+
   return 0; 
-}
+} // End createRegularFiles()
 
 void createChildProcess() {}
 
