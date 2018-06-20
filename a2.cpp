@@ -93,7 +93,31 @@ void createChildProcess() {}
 
 void createChildProcessShadow() {}
 
-void readFromFile() {}
+int readFromFile() {
+  string filename;
+
+  cout << "Please enter filename: ";
+  cin >> filename;
+
+  // Open file
+  ifstream infile;
+  infile.open(filename);
+
+  // Fail check
+  if(infile.fail()) {
+    cout << "Cannot open file.\n";
+    exit(1);
+  } // End if
+
+  // Print file to console
+  cout << infile.rdbuf() << endl;
+
+  // Close file
+  infile.close();
+  cout << endl;
+
+  return 0;
+} // End readFromFile()
 
 void writeToFile() {}
 
