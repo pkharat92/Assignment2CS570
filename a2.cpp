@@ -84,9 +84,23 @@ void createDirectory() {
 
 }
 
-void createNewRegularFiles() {
-	
+int createNewRegularFiles() {
+  string filename;
+  string str;
 
+  cout << "Please enter filename: ";
+  cin >> filename;
+
+  const char * c = filename.c_str();
+
+  ofstream outfile(c);
+
+  cin >> str;
+  outfile << str << "\n";
+
+  outfile.close();
+
+  return 0; 
 }
 
 void createChildProcess() {}
