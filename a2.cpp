@@ -93,7 +93,7 @@ int printFileStatus() {
   struct stat FileAttrib;
   string filename;
 
-  cout << "\nPlease enter the filename: ";
+  cout << "Please enter the filename: ";
   cin >> filename;
 
   const char * c = filename.c_str();
@@ -131,6 +131,7 @@ int printDirectoryListing() {
 	struct dirent *ent;
 	
 	if ((dir = opendir (".")) != NULL) {
+		cout << "\n";
 		// Print all files and directories within directory
 		while ((ent = readdir (dir)) != NULL) {
 			printf ("%s\n", ent->d_name);
