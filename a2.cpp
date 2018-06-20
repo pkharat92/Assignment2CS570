@@ -93,7 +93,7 @@ int printFileStatus() {
   struct stat FileAttrib;
   string filename;
 
-  cout << "\nPlease enter the filename: ";
+  cout << "Please enter the filename: ";
   cin >> filename;
 
   const char * c = filename.c_str();
@@ -110,14 +110,14 @@ int printFileStatus() {
 	cout << "\n";
     
     	switch (FileAttrib.st_mode & S_IFMT) {
-      		case S_IFBLK:  printf("block device\n");            break;
-     		 case S_IFCHR:  printf("character device\n");        break;
-      		case S_IFDIR:  printf("directory\n");               break;
-      		case S_IFIFO:  printf("FIFO/pipe\n");               break;
-		      case S_IFLNK:  printf("symlink\n");                 break;
-      		case S_IFREG:  printf("regular file\n");            break;
-      		case S_IFSOCK: printf("socket\n");                  break;
-      		default:       printf("unknown?\n");                break;
+      		case S_IFBLK:  printf("block device");            break;
+     		 case S_IFCHR:  printf("character device");       break;
+      		case S_IFDIR:  printf("directory");               break;
+      		case S_IFIFO:  printf("FIFO/pipe");               break;
+		      case S_IFLNK:  printf("symlink");           break;
+      		case S_IFREG:  printf("regular file");            break;
+      		case S_IFSOCK: printf("socket");                  break;
+      		default:       printf("unknown?");                break;
    	} // End switch
 	  
     	printf("\nI-node number: %ld\n", (long) FileAttrib.st_ino);
@@ -136,7 +136,9 @@ int printFileStatus() {
     	printf("Last file modification: %s", ctime(&FileAttrib.st_mtime));
   } // End if
   
-  return 0;
+	cout << endl;
+	
+  	return 0;
 } // End printFileStatus()
 
 int printDirectoryListing() {
