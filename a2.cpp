@@ -192,8 +192,14 @@ int printFileStatus() {
 int printDirectoryListing() {
 	DIR *dir;
 	struct dirent *ent;
+	string filename;
+
+  	cout << "Please specify the directory: ";
+	cin >> filename;
+ 	const char * c = filename.c_str();
+	cout << "\n";
 	
-	if ((dir = opendir (".")) != NULL) {
+	if ((dir = opendir (c)) != NULL) {
 		// Print all files and directories within directory
 		while ((ent = readdir (dir)) != NULL) {
 			printf ("%s\n", ent->d_name);
