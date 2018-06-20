@@ -15,5 +15,5 @@ void createChildProcess();
 void createChildProcessShadow();
 void readFromFile();
 void writeToFile();
-void printFileStatus();
+int printFileStatus();
 int printDirectoryListing();
