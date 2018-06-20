@@ -15,4 +15,4 @@ void createChildProcessShadow();
 void readFromFile();
 void writeToFile();
 void printFileStatus();
-void printDirectoryListing();
+int printDirectoryListing();
