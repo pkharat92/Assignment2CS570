@@ -130,6 +130,7 @@ int printDirectoryListing() {
 	struct dirent *ent;
 	
 	if ((dir = opendir (".")) != NULL) {
+		cout << "\n";
 		// Print all files and directories within directory
 		while ((ent = readdir (dir)) != NULL) {
 			printf ("%s\n", ent->d_name);
