@@ -102,29 +102,42 @@ int printFileStatus() {
   {
     printf("Argument missing!\n");
     exit(10);
-  }
+  } // End if
 
   if (stat(c, &FileAttrib) < 0)
     printf("\nFile Error Message = %s\n", strerror(errno));
   else {
-    printf("\nI-node number: %ld\n", (long) FileAttrib.st_ino);
-    printf("Mode: %lo (octal)\n", (unsigned long) FileAttrib.st_mode);
-    printf("Link count: %ld\n", (long) FileAttrib.st_nlink);
-    printf("Ownership: UID=%ld   GID=%ld\n", 
-      (long) FileAttrib.st_uid, (long) FileAttrib.st_gid);
-    printf("Preferred I/O block size: %ld bytes\n",
-      (long) FileAttrib.st_blksize);
-    printf("File size: %lld bytes\n",
-      (long long) FileAttrib.st_size);
-    printf("Blocks allocated: %lld\n",
-      (long long) FileAttrib.st_blocks);
-    printf("Last status change: %s", ctime(&FileAttrib.st_ctime));
-    printf("Last file access: %s", ctime(&FileAttrib.st_atime));
-    printf("Last file modification: %s", ctime(&FileAttrib.st_mtime));
-  }
+	cout << "\n";
+    
+    	switch (FileAttrib.st_mode & S_IFMT) {
+      		case S_IFBLK:  printf("block device\n");            break;
+     		 case S_IFCHR:  printf("character device\n");        break;
+      		case S_IFDIR:  printf("directory\n");               break;
+      		case S_IFIFO:  printf("FIFO/pipe\n");               break;
+		      case S_IFLNK:  printf("symlink\n");                 break;
+      		case S_IFREG:  printf("regular file\n");            break;
+      		case S_IFSOCK: printf("socket\n");                  break;
+      		default:       printf("unknown?\n");                break;
+   	} // End switch
+	  
+    	printf("\nI-node number: %ld\n", (long) FileAttrib.st_ino);
+    	printf("Mode: %lo (octal)\n", (unsigned long) FileAttrib.st_mode);
+   	printf("Link count: %ld\n", (long) FileAttrib.st_nlink);
+    	printf("Ownership: UID=%ld   GID=%ld\n", 
+      		(long) FileAttrib.st_uid, (long) FileAttrib.st_gid);
+    	printf("Preferred I/O block size: %ld bytes\n",
+      		(long) FileAttrib.st_blksize);
+    	printf("File size: %lld bytes\n",
+      		(long long) FileAttrib.st_size);
+    	printf("Blocks allocated: %lld\n",
+      		(long long) FileAttrib.st_blocks);
+    	printf("Last status change: %s", ctime(&FileAttrib.st_ctime));
+    	printf("Last file access: %s", ctime(&FileAttrib.st_atime));
+    	printf("Last file modification: %s", ctime(&FileAttrib.st_mtime));
+  } // End if
   
   return 0;
-}
+} // End printFileStatus()
 
 int printDirectoryListing() {
 	DIR *dir;
@@ -144,5 +157,5 @@ int printDirectoryListing() {
 	} // End if
 	
 	cout << endl;
-	
+	return 0;
 } // End printDirectoryListing()
