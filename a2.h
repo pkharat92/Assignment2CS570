@@ -10,7 +10,7 @@
 // Function prototypes
 void displayMenu();
 void createDirectory();
-void createNewRegularFiles();
+int createNewRegularFiles();
 void createChildProcess();
 void createChildProcessShadow();
 int readFromFile();
