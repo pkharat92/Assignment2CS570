@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <errno.h>
 
 // Function prototypes
 void displayMenu();
