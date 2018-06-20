@@ -92,7 +92,7 @@ int printFileStatus() {
   struct stat FileAttrib;
   string filename;
 
-  cout << "\nPlease enter the filename: ";
+  cout << "Please enter the filename: ";
   cin >> filename;
 
   const char * c = filename.c_str();
