@@ -59,7 +59,7 @@ int printDirectoryListing() {
 	DIR *dir;
 	struct dirent *ent;
 	
-	if ((dir = opendir ("/home/user/")) != NULL) {
+	if ((dir = opendir (".")) != NULL) {
 		// Print all files and directories within directory
 		while ((ent = readdir (dir)) != NULL) {
 			printf ("%s\n", ent->d_name);
