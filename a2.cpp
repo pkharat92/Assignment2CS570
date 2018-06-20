@@ -1,3 +1,8 @@
+/* 
+ * 
+ * 
+ */
+ 
 #include "a2.h"
 
 using namespace std;
@@ -9,36 +14,48 @@ int main()
 } // End int main()
 
 void displayMenu() {
+	
 	char c;
+	int i = 1;
+	
+	while(i == 1){
 
-	cout << "Multi-Processing File Editor Menu" << endl << endl;
-	cout << "1. Create new directory files" << endl
-		<< "2. Create new regular files" << endl
-		<< "3. Create child process to write sorted output" << endl
-		<< "4. Create child process to shadow write/read regular files" << endl
-		<< "5. Read from a file (print out to stdout)" << endl
-		<< "6. Write to a file in either insert, append, or overwrite mode" << endl
-		<< "7. Print file status (print out to stdout)" << endl
-		<< "8. Print directory listing (contents of dir file) (print out to stdout)" << endl
-		<< "9. Exit" << endl << endl;
-
-	cout << "Please select an option: ";
+		cout << "Multi-Processing File Editor Menu" << endl << endl;
+		cout << "1. Create new directory files" << endl
+			 << "2. Create new regular files" << endl
+			 << "3. Create child process to write sorted output" << endl
+			 << "4. Create child process to shadow write/read regular files" << endl
+			 << "5. Read from a file (print out to stdout)" << endl
+			 << "6. Write to a file in either insert, append, or overwrite mode" << endl
+			 << "7. Print file status (print out to stdout)" << endl
+			 << "8. Print directory listing (contents of dir file) (print out to stdout)" << endl
+			 << "9. Exit" << endl << endl;
 	
-	cin >> c;
+		cout << "Please select an option: ";
+		
+		cin >> c;
+		
+		cout << endl;
+		
+		switch (c) {
+			case '1': createDirectory(); break;
+			case '2': createNewRegularFiles(); break;
+			case '3': createChildProcess(); break;
+			case '4': createChildProcessShadow(); break;
+			case '5': readFromFile(); break;
+			case '6': writeToFile(); break;
+			case '7': printFileStatus(); break;
+			case '8': printDirectoryListing(); break;
+			case '9': return;
+		} // End switch
+		
+		
+		cout << "Type 1 for Menu or 0 for exit: ";
+		
+		cin >> i;
+	}
 	
-	cout << endl;
-	
-	switch (c) {
-		case '1': createDirectory(); break;
-		case '2': createNewRegularFiles(); break;
-		case '3': createChildProcess(); break;
-		case '4': createChildProcessShadow(); break;
-		case '5': readFromFile(); break;
-		case '6': writeToFile(); break;
-		case '7': printFileStatus(); break;
-		case '8': printDirectoryListing(); break;
-		case '9': return;
-	} // End switch
+	cout << endl << "Have a nice day" << endl;
 } // End void displayMenu()
 
 void createDirectory() {
@@ -54,9 +71,14 @@ void createDirectory() {
 		cerr << "Error: "<< strerror(errno) << endl;
 		exit(1);
 	}	
+	
+	cout << endl;
 }
 
-void createNewRegularFiles() {}
+void createNewRegularFiles() {
+	
+
+}
 
 void createChildProcess() {}
 
@@ -84,4 +106,9 @@ int printDirectoryListing() {
 		perror("");
 		return EXIT_FAILURE;
 	} // End if
+	
+	cout << endl;
+	
 } // End printDirectoryListing()
+
+void DisplayAgain(){}
