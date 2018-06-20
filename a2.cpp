@@ -66,13 +66,14 @@ void createDirectory() {
 	
 	cin >> pathName;
 	
-	if(mkdir(pathName.c_str(),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1)//creating a directory
-	{
+	if(mkdir(pathName.c_str(),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1){ //creating a directory
 		cerr << "Error: "<< strerror(errno) << endl;
 		exit(1);
-	}	
+	}
 	
-	cout << endl;
+	else 
+		cout << "New directory " << pathName << " created." << endl;	
+
 }
 
 void createNewRegularFiles() {
@@ -145,5 +146,3 @@ int printDirectoryListing() {
 	cout << endl;
 	
 } // End printDirectoryListing()
-
-void DisplayAgain(){}
