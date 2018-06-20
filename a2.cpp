@@ -19,7 +19,8 @@ void displayMenu() {
 	int i = 1;
 	
 	while(i == 1){
-
+		
+		cout << endl << endl;
 		cout << "Multi-Processing File Editor Menu" << endl << endl;
 		cout << "1. Create new directory files" << endl
 			 << "2. Create new regular files" << endl
@@ -37,6 +38,12 @@ void displayMenu() {
 		
 		cout << endl;
 		
+		//if(!isdigit(c)){
+			
+			//cout << "Invalid argument, try again" << endl;
+			//continue;
+		//}
+		
 		switch (c) {
 			case '1': createDirectory(); break;
 			case '2': createNewRegularFiles(); break;
@@ -53,6 +60,8 @@ void displayMenu() {
 		cout << "Type 1 for Menu or 0 for exit: ";
 		
 		cin >> i;
+		
+		cout << endl;
 	}
 	
 	cout << endl << "Have a nice day" << endl;
@@ -63,7 +72,6 @@ void createDirectory() {
 	std::string pathName;
 	
 	cout << "Please type the name of the directory: ";
-	
 	cin >> pathName;
 	
 	if(mkdir(pathName.c_str(),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1){ //creating a directory
@@ -72,7 +80,7 @@ void createDirectory() {
 	}
 	
 	else 
-		cout << "New directory " << pathName << " created." << endl;	
+		cout << endl <<"New directory " << pathName << " created.\n\n";	
 
 }
 
@@ -90,6 +98,7 @@ void readFromFile() {}
 void writeToFile() {}
 
 int printFileStatus() {
+  
   struct stat FileAttrib;
   string filename;
 
@@ -98,42 +107,43 @@ int printFileStatus() {
 
   const char * c = filename.c_str();
  
-  if(c == NULL)
-  {
+  if(c == NULL){
+	  
     printf("Argument missing!\n");
     exit(10);
   } // End if
 
   if (stat(c, &FileAttrib) < 0)
     printf("\nFile Error Message = %s\n", strerror(errno));
+  
   else {
 	cout << "\n";
     
     	switch (FileAttrib.st_mode & S_IFMT) {
-      		case S_IFBLK:  printf("block device\n");            break;
-     		 case S_IFCHR:  printf("character device\n");        break;
-      		case S_IFDIR:  printf("directory\n");               break;
-      		case S_IFIFO:  printf("FIFO/pipe\n");               break;
-		      case S_IFLNK:  printf("symlink\n");                 break;
-      		case S_IFREG:  printf("regular file\n");            break;
-      		case S_IFSOCK: printf("socket\n");                  break;
-      		default:       printf("unknown?\n");                break;
+      		case S_IFBLK:  printf("block device\n");          break;
+     		case S_IFCHR:  printf("character device\n");      break;
+      		case S_IFDIR:  printf("directory\n");             break;
+      		case S_IFIFO:  printf("FIFO/pipe\n");             break;
+		    case S_IFLNK:  printf("symlink\n");               break;
+      		case S_IFREG:  printf("regular file\n");          break;
+      		case S_IFSOCK: printf("socket\n");                break;
+      		default:       printf("unknown?\n");              break;
    	} // End switch
 	  
-    	printf("\nI-node number: %ld\n", (long) FileAttrib.st_ino);
-    	printf("Mode: %lo (octal)\n", (unsigned long) FileAttrib.st_mode);
+	printf("\nI-node number: %ld\n", (long) FileAttrib.st_ino);
+	printf("Mode: %lo (octal)\n", (unsigned long) FileAttrib.st_mode);
    	printf("Link count: %ld\n", (long) FileAttrib.st_nlink);
-    	printf("Ownership: UID=%ld   GID=%ld\n", 
-      		(long) FileAttrib.st_uid, (long) FileAttrib.st_gid);
-    	printf("Preferred I/O block size: %ld bytes\n",
-      		(long) FileAttrib.st_blksize);
-    	printf("File size: %lld bytes\n",
-      		(long long) FileAttrib.st_size);
-    	printf("Blocks allocated: %lld\n",
-      		(long long) FileAttrib.st_blocks);
-    	printf("Last status change: %s", ctime(&FileAttrib.st_ctime));
-    	printf("Last file access: %s", ctime(&FileAttrib.st_atime));
-    	printf("Last file modification: %s", ctime(&FileAttrib.st_mtime));
+	printf("Ownership: UID=%ld   GID=%ld\n", 
+		(long) FileAttrib.st_uid, (long) FileAttrib.st_gid);
+	printf("Preferred I/O block size: %ld bytes\n",
+		(long) FileAttrib.st_blksize);
+	printf("File size: %lld bytes\n", (long long) FileAttrib.st_size);
+	printf("Blocks allocated: %lld\n", (long long) FileAttrib.st_blocks);
+	printf("Last status change: %s", ctime(&FileAttrib.st_ctime));
+	printf("Last file access: %s", ctime(&FileAttrib.st_atime));
+	printf("Last file modification: %s", ctime(&FileAttrib.st_mtime));
+	
+	cout << endl;
   } // End if
   
   return 0;
