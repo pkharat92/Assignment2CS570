@@ -171,7 +171,28 @@ int writeToFile() {
   return 0;
 } // End writeToFile()
 
-int insertInFile() {}
+int insertInFile() {
+  string filename;
+	string str;
+
+  cout << "Please enter filename: ";
+  cin >> filename;
+  const char * c = filename.c_str();
+
+  FILE * pFile;
+	pFile = fopen(c, "r+");
+
+  if(pFile != NULL) {
+    cout << "What do you want to add to the file: " << endl;
+	  cin.ignore();
+	  getline(cin, str);
+    const char * cstr = str.c_str();
+    fputs(cstr, pFile);
+    fclose(pFile);
+  } // End if
+	
+	return 0;
+}
 
 int appendToFile() {
 	string filename;
@@ -191,7 +212,7 @@ int appendToFile() {
     const char * cstr = str.c_str();
     fputs(cstr, pFile);
     fclose(pFile);
-  } // End appendToFile()
+  } // End if
 	
 	return 0;
 } // End appendToFile()
@@ -214,7 +235,7 @@ int overwriteFile() {
     const char * cstr = str.c_str();
     fputs(cstr, pFile);
     fclose(pFile);
-  }
+  } // End if
   
   return 0;
   } // End overwriteFile()
