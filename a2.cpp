@@ -148,6 +148,8 @@ int readFromFile() {
 } // End readFromFile()
 
 int writeToFile() {
+  char c;
+
 	cout << endl << endl;
 	cout << "Multi-Processing File Editor Menu" << endl << endl;
 	cout << "1. Insert in File" << endl
@@ -165,6 +167,8 @@ int writeToFile() {
 			case '3': overwriteFile(); break;
 			case '4': displayMenu(); break;
 		} // End switch
+
+  return 0;
 } // End writeToFile()
 
 int insertInFile() {}
@@ -173,21 +177,21 @@ int appendToFile() {
 	string filename;
 	string str;
 
-    	cout << "Please enter filename: ";
-    	cin >> filename;
+  cout << "Please enter filename: ";
+  cin >> filename;
+  const char * c = filename.c_str();
+	ofstream outfile;
+  outfile.open(c, ios_base::app);
 
-    	const char * c = filename.c_str();
-	
-	outfile.open(c, ios_base::app);
 	cout << "What do you want to add to the file: " << endl;
-	cin.ignore():
+	cin.ignore();
 	getline(cin, str);
 	outfile << str;
 	
 	return 0;
 } // End appendToFile()
 
-int overwriteToFile() {}
+int overwriteFile() {}
 
 int printFileStatus() {
   
