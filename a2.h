@@ -18,3 +18,6 @@ int readFromFile();
 void writeToFile();
 int printFileStatus();
 int printDirectoryListing();
+int insertInFile() {};
+int appendToFile() {};
+int overwriteToFile() {};
