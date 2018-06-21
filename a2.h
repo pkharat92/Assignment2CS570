@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <errno.h>
+#include <vector>
 
 // Function prototypes
 void displayMenu();

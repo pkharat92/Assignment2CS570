@@ -85,99 +85,110 @@ void createDirectory() {
 }
 
 int createNewRegularFiles() {
-  string filename;
-  string str;
-
-  cout << "Please enter filename: ";
-  cin >> filename;
-  const char * c = filename.c_str();
-  ofstream outfile(c);
-
-  cout << "\nType what you want to write to file:\n\n";
-  cin.ignore();
-  getline(cin, str);
-  cout << "\n";
-  outfile << str << "\n";
-  outfile.close();
-
-
-  return 0; 
+	
+	string filename;
+	string str;
+	
+	cout << "Please enter filename: ";
+	cin >> filename;
+	const char * c = filename.c_str();
+	ofstream outfile(c);
+	
+	cout << "\nType what you want to write to file:\n\n";
+	cin.ignore();
+	getline(cin, str);
+	cout << "\n";
+	outfile << str << "\n";
+	outfile.close();
+		
+	return 0; 
 } // End createRegularFiles()
 
-void createChildProcess() {}
+void createChildProcess() {
+	
+    string filename;
+
+    cout << "Please enter filename: ";
+    cin >> filename;
+	
+	
+	
+}
 
 void createChildProcessShadow() {}
 
 int readFromFile() {
-  string filename;
+    string filename;
 
-  cout << "Please enter filename: ";
-  cin >> filename;
+    cout << "Please enter filename: ";
+    cin >> filename;
 
-  const char * c = filename.c_str();
+    const char * c = filename.c_str();
 
-  // Open file
-  ifstream infile;
-  infile.open(c);
+    // Open file
+    ifstream infile;
+    infile.open(c);
 
-  // Fail check
-  if(infile.fail()) {
+    // Fail check
+    if(infile.fail()) {
+    
     cout << "Cannot open file.\n";
     exit(1);
-  } // End if
+    
+    } // End if
 
-  // Print file to console
-  cout << infile.rdbuf() << endl;
+    // Print file to console
+    cout << infile.rdbuf() << endl;
 
-  // Close file
-  infile.close();
-  cout << endl;
+    // Close file
+    infile.close();
+    cout << endl;
 
-  return 0;
+    return 0;
 } // End readFromFile()
 
 void writeToFile() {}
 
 int printFileStatus() {
   
-  struct stat FileAttrib;
-  string filename;
+    struct stat FileAttrib;
+    string filename;
 
-  cout << "\nPlease enter the filename: ";
-  cin >> filename;
+    cout << "\nPlease enter the filename: ";
+    cin >> filename;
 
-  const char * c = filename.c_str();
- 
-  if(c == NULL){
-	  
-    printf("Argument missing!\n");
-    exit(10);
-  } // End if
-
-  if (stat(c, &FileAttrib) < 0)
-    printf("\nFile Error Message = %s\n", strerror(errno));
-  
-  else {
+	const char * c = filename.c_str();
+	
+	if(c == NULL){
+	
+	printf("Argument missing!\n");
+	exit(10);
+	} // End if
+	
+	if (stat(c, &FileAttrib) < 0)
+	printf("\nFile Error Message = %s\n", strerror(errno));
+	
+	else {
 	cout << "\n";
-    
-    	switch (FileAttrib.st_mode & S_IFMT) {
-      		case S_IFBLK:  printf("block device\n");          break;
-     		case S_IFCHR:  printf("character device\n");      break;
-      		case S_IFDIR:  printf("directory\n");             break;
-      		case S_IFIFO:  printf("FIFO/pipe\n");             break;
-		    case S_IFLNK:  printf("symlink\n");               break;
-      		case S_IFREG:  printf("regular file\n");          break;
-      		case S_IFSOCK: printf("socket\n");                break;
-      		default:       printf("unknown?\n");              break;
-   	} // End switch
-	  
+	
+	switch (FileAttrib.st_mode & S_IFMT) {
+	case S_IFBLK:  printf("block device\n");          break;
+	case S_IFCHR:  printf("character device\n");      break;
+	case S_IFDIR:  printf("directory\n");             break;
+	case S_IFIFO:  printf("FIFO/pipe\n");             break;
+	case S_IFLNK:  printf("symlink\n");               break;
+	case S_IFREG:  printf("regular file\n");          break;
+	case S_IFSOCK: printf("socket\n");                break;
+	default:       printf("unknown?\n");              break;
+	} // End switch
+	
 	printf("\nI-node number: %ld\n", (long) FileAttrib.st_ino);
 	printf("Mode: %lo (octal)\n", (unsigned long) FileAttrib.st_mode);
-   	printf("Link count: %ld\n", (long) FileAttrib.st_nlink);
+	printf("Link count: %ld\n", (long) FileAttrib.st_nlink);
 	printf("Ownership: UID=%ld   GID=%ld\n", 
-		(long) FileAttrib.st_uid, (long) FileAttrib.st_gid);
+	(long) FileAttrib.st_uid, (long) FileAttrib.st_gid);
 	printf("Preferred I/O block size: %ld bytes\n",
-		(long) FileAttrib.st_blksize);
+	(long) FileAttrib.st_blksize);
 	printf("File size: %lld bytes\n", (long long) FileAttrib.st_size);
 	printf("Blocks allocated: %lld\n", (long long) FileAttrib.st_blocks);
 	printf("Last status change: %s", ctime(&FileAttrib.st_ctime));
@@ -185,8 +196,8 @@ int printFileStatus() {
 	printf("Last file modification: %s", ctime(&FileAttrib.st_mtime));
 	
 	cout << endl;
-  } // End if
-  
+	} // End if
+	
   return 0;
 } // End printFileStatus()
 
