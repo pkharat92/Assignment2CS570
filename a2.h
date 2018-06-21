@@ -1,6 +1,8 @@
 #include <iostream>
+#include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <fstream>
 #include <string.h>
 #include <stdlib.h>
@@ -15,7 +17,7 @@ int createNewRegularFiles();
 void createChildProcess();
 void createChildProcessShadow();
 int readFromFile();
-void writeToFile();
+int writeToFile();
 int printFileStatus();
 int printDirectoryListing();
 int insertInFile();
