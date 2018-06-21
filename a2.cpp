@@ -147,7 +147,31 @@ int readFromFile() {
     return 0;
 } // End readFromFile()
 
-void writeToFile() {}
+int writeToFile() {
+	cout << endl << endl;
+	cout << "Multi-Processing File Editor Menu" << endl << endl;
+	cout << "1. Insert in File" << endl
+		<< "2. Append to File" << endl
+		<< "3. Overwrite File" << endl
+		<< "4. Return to Previous Menu" << endl << endl;
+	
+	cout << "Please select an option: ";
+	cin >> c;
+	cout << endl;
+	
+	switch (c) {
+			case '1': insertInFile(); break;
+			case '2': appendToFile(); break;
+			case '3': overwriteFile(); break;
+			case '4': displayMenu(); break;
+		} // End switch
+} // End writeToFile()
+
+int insertInFile() {}
+
+int appendToFile() {}
+
+int overwriteToFile() {}
 
 int printFileStatus() {
   
