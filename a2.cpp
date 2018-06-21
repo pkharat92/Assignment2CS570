@@ -180,13 +180,18 @@ int appendToFile() {
   cout << "Please enter filename: ";
   cin >> filename;
   const char * c = filename.c_str();
-	ofstream outfile;
-  outfile.open(c, ios_base::app);
 
-	cout << "What do you want to add to the file: " << endl;
-	cin.ignore();
-	getline(cin, str);
-	outfile << str;
+  FILE * pFile;
+	pFile = fopen(c, "a");
+
+  if(pFile != NULL) {
+    cout << "What do you want to add to the file: " << endl;
+	  cin.ignore();
+	  getline(cin, str);
+    const char * cstr = str.c_str();
+    fputs(cstr, pFile);
+    fclose(pFile);
+  } // End appendToFile()
 	
 	return 0;
 } // End appendToFile()
@@ -198,15 +203,21 @@ int overwriteFile() {
   cout << "Please enter filename: ";
   cin >> filename;
   const char * c = filename.c_str();
-	ofstream outfile(c);
 
-	cout << "What do you want to write to the file: " << endl;
-	cin.ignore();
-	getline(cin, str);
-	outfile << str;
-	
-	return 0;
-} // End overwriteFile()
+  FILE * pFile;
+	pFile = fopen(c, "w");
+
+  if(pFile != NULL) {
+    cout << "What do you want to write to the file: " << endl;
+	  cin.ignore();
+	  getline(cin, str);
+    const char * cstr = str.c_str();
+    fputs(cstr, pFile);
+    fclose(pFile);
+  }
+  
+  return 0;
+  } // End overwriteFile()
 
 int printFileStatus() {
   
