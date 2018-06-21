@@ -169,7 +169,23 @@ int writeToFile() {
 
 int insertInFile() {}
 
-int appendToFile() {}
+int appendToFile() {
+	string filename;
+	string str;
+
+    	cout << "Please enter filename: ";
+    	cin >> filename;
+
+    	const char * c = filename.c_str();
+	
+	outfile.open(c, ios_base::app);
+	cout << "What do you want to add to the file: " << endl;
+	cin.ignore():
+	getline(cin, str);
+	outfile << str;
+	
+	return 0;
+} // End appendToFile()
 
 int overwriteToFile() {}
 
