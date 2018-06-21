@@ -191,7 +191,22 @@ int appendToFile() {
 	return 0;
 } // End appendToFile()
 
-int overwriteFile() {}
+int overwriteFile() {
+  string filename;
+	string str;
+
+  cout << "Please enter filename: ";
+  cin >> filename;
+  const char * c = filename.c_str();
+	ofstream outfile(c);
+
+	cout << "What do you want to write to the file: " << endl;
+	cin.ignore();
+	getline(cin, str);
+	outfile << str;
+	
+	return 0;
+} // End overwriteFile()
 
 int printFileStatus() {
   
