@@ -11,6 +11,7 @@
 #include <vector>
 #include <cstdio>
 #include <algorithm>
+#include <bits/stdc++.h>
 
 // Function prototypes
 void displayMenu();
