@@ -241,10 +241,52 @@ int writeToFile() {
 	}//End if
 	
 	else if(PID > 0){ //Parent process executes code here
-		wait(NULL);
-		/*PID2= fork();
+		PID2= fork();
 		if(PID2 == 0){//Child
+			string filename, str = "";
+					
+   			cout << "Please enter filename: ";
+    			cin >> filename;
 			
+   			const char * c = filename.c_str();
+	
+			// Open file
+	    		ifstream infile;
+	   		infile.open(c);
+	
+	    		// Fail check
+	    		if(infile.fail()) {
+				cout << "Cannot open file.\n";
+				exit(1);
+	    	    	} // End if
+	    
+			
+			// Get input from file
+			string line, intermediate, filename2;
+	    		line = infile.rdbuf();
+			vector <string> tokens;
+			stringstream check1(line);
+			
+			// This is used to sort the tokens array
+			struct myclass {
+  				bool operator() (int i,int j) { return (i<j);}
+			} myobject;
+			
+			filename2 = filename + "_sortAsc";
+			const char * c = filename2.c_str();
+			ofstream outfile(c);
+			
+			while(getline(check1, intermediate, ' ')) {
+				tokens.pushback(intermediate);
+			} // End while
+			
+			sort (tokens.begin(), tokens.end(), myobject);  
+			
+			for(int i = 0; i < tokens.size(); i++) {
+				outfile << tokens[i] << '\n';
+			} // End for
+			
+	   		infile.close();// Close file
 			exit(0);
 		}
 		else if(PID2 > 0){//Parent
@@ -253,17 +295,17 @@ int writeToFile() {
 			if(PID3 == 0){
 				
 				exit(0);
-			}
+			} // End if
 			else if(PID3 > 0){
 				
-			}
-		}*/
-	}
+			} // End else if
+		} // End else if
+	} // End else if
 	
 	else{
 		perror("fork() error");
 		exit(-1);		
-	}
+	} // End if
 
 	return 0;
 } // End writeToFile()
