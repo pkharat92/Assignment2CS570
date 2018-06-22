@@ -241,6 +241,7 @@ int writeToFile() {
 	}//End if
 	
 	else if(PID > 0){ //Parent process executes code here
+		wait(NULL);
 		PID2= fork();
 		if(PID2 == 0){//Child
 			string filename, str = "";
