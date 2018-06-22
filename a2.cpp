@@ -48,12 +48,11 @@ void displayMenu() {
 			case '1': createDirectory(); break;
 			case '2': createNewRegularFiles(); break;
 			case '3': readFromFile(); break;
-			case '4': writeToFile(); break;
+			case '4': if(writeToFile() == 1){continue;}; break;
 			case '5': printFileStatus(); break;
 			case '6': printDirectoryListing(); break;
 			case '7': return;
 		} // End switch
-		
 		
 		cout << "Type 1 for Menu or 0 for exit: ";
 		
@@ -94,11 +93,6 @@ int createNewRegularFiles() {
 	
 	cout << "\nFile: " << c << " created\n\n";
 	
-	//cout << "\nType what you want to write to file:\n\n";
-	//cin.ignore();
-	//getline(cin, str);
-	//cout << "\n";
-	//outfile << str << "\n";
 	outfile.close();
 		
 	return 0; 
@@ -154,8 +148,7 @@ int readFromFile() {
 		wait(NULL);
 	}
 	
-	else{
-		
+	else{	
 		perror("fork() error");
 		exit(-1);		
 	}
@@ -163,40 +156,12 @@ int readFromFile() {
     return 0;
 }
 
-void createChildProcessShadow() {}
-
-/*int readFromFile() {
-    string filename;
-
-    cout << "Please enter filename: ";
-    cin >> filename;
-
-    const char * c = filename.c_str();
-
-    // Open file
-    ifstream infile;
-    infile.open(c);
-
-    // Fail check
-    if(infile.fail()) {
-    
-    cout << "Cannot open file.\n";
-    exit(1);
-    
-    } // End if
-
-    // Print file to console
-    cout << infile.rdbuf() << endl;
-
-    // Close file
-    infile.close();
-    cout << endl;
-
-return 0;
-} // End readFromFile()
-*/
 int writeToFile() {
-	char c;
+	char p;
+	char str_cp[256];
+	string filename;
+	string str;
+	FILE * pFile;
 
 	cout << endl << endl;
 	cout << "Multi-Processing File Editor Menu" << endl << endl;
@@ -206,87 +171,84 @@ int writeToFile() {
 		 << "4. Return to Previous Menu" << endl << endl;
 	
 	cout << "Please select an option: ";
-	cin >> c;
+	cin >> p;
 	cout << endl;
 	
-	switch (c) {
-			case '1': insertInFile(); break;
-			case '2': appendToFile(); break;
-			case '3': overwriteToFile(); break;
-			case '4': displayMenu(); break;
+	if(p == '4'){return 1;}
+		
+	cout << "Please enter filename: ";
+	cin >> filename;
+	const char * c = filename.c_str();
+	strcpy(str_cp,c);
+	
+	
+	pid_t PID, PID2, PID3; 
+	PID= fork(); //create child process
+	
+	
+	if(PID == 0){ //Child proccess executes code here
+		switch (p) {
+			case '1': pFile = fopen(c, "r+"); break;
+			case '2': pFile = fopen(c, "a"); break;
+			case '3': pFile = fopen(c, "w");  break;
 		} // End switch
+		
+		
+		
+		/*Creating the backup file*/
+		if(!fileExists(strcat(str_cp,".bak"))){ //file exists
+			FILE *bFILE = fopen(strcat(str_cp,".bak"),"w");
+		    FILE * original = fopen(c,"r"); 
+		    int ch;
+		    
+		    while((ch = getc(original)) != EOF)
+				putc(ch,bFILE);
+		    fclose(bFILE);
+		    fclose(original);
+		}
+	    /*End*/
+		
+		if(pFile != NULL) {
+			cout << "What do you want to add or write to the file: " << endl;
+			cin.ignore();
+			getline(cin, str);
+			const char * cstr = str.c_str();
+			fputs(cstr, pFile);
+			fclose(pFile);
+		}//End if
+		
+		cout<<endl;
+		exit(0);
+		
+	}//End if
+	
+	else if(PID > 0){ //Parent process executes code here
+		wait(NULL);
+		PID2= fork();
+		if(PID2 == 0){//Child
+			
+			exit(0);
+		}
+		else if(PID2 > 0){//Parent
+			wait(NULL);
+			PID3= fork();
+			if(PID3 == 0){
+				
+				exit(0);
+			}
+			else if(PID3 > 0){
+				
+			}
+		}
+	}
+	
+	else{
+		perror("fork() error");
+		exit(-1);		
+	}
 
 	return 0;
 } // End writeToFile()
-
-int insertInFile() {
-	string filename;
-	string str;
-	
-	cout << "Please enter filename: ";
-	cin >> filename;
-	const char * c = filename.c_str();
-	
-	FILE * pFile;
-	pFile = fopen(c, "r+");
-	
-	if(pFile != NULL) {
-		cout << "What do you want to add to the file: " << endl;
-		cin.ignore();
-		getline(cin, str);
-		const char * cstr = str.c_str();
-		fputs(cstr, pFile);
-		fclose(pFile);
-	} // End if
-	
-	return 0;
-}
-
-int appendToFile() {
-	string filename;
-	string str;
-
-	cout << "Please enter filename: ";
-	cin >> filename;
-	const char * c = filename.c_str();
-	
-	FILE * pFile;
-	pFile = fopen(c, "a");
-	
-	if(pFile != NULL) {
-		cout << "What do you want to add to the file: " << endl;
-		cin.ignore();
-		getline(cin, str);
-		const char * cstr = str.c_str();
-		fputs(cstr, pFile);
-		fclose(pFile);
-	} // End if
-	
-	return 0;
-} // End appendToFile()
-
-int overwriteToFile() {
-	string filename;
-	string str;
-	
-	cout << "Please enter filename: ";
-	cin >> filename;
-	const char * c = filename.c_str();
-	
-	FILE * pFile;
-	pFile = fopen(c, "w");
-	
-	if(pFile != NULL) {
-		cout << "What do you want to write to the file: " << endl;
-		cin.ignore();
-		getline(cin, str);
-		const char * cstr = str.c_str();
-		fputs(cstr, pFile);
-		fclose(pFile);
-	} // End if
-  
-	return 0;
-  } // End overwriteFile()
 
 int printFileStatus() {
   
@@ -367,3 +329,12 @@ int printDirectoryListing() {
 	cout << endl;
 	return 0;
 } // End printDirectoryListing()
+
+/*
+ * Check if a file exists already 
+ */
+bool fileExists(const char *fileName)
+{
+    std::ifstream infile(fileName);
+    return infile.good();
+}

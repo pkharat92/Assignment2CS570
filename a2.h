@@ -14,8 +14,6 @@
 void displayMenu();
 void createDirectory();
 int createNewRegularFiles();
-int createChildProcess();
-void createChildProcessShadow();
 int readFromFile();
 int writeToFile();
 int printFileStatus();
@@ -23,3 +21,4 @@ int printDirectoryListing();
 int insertInFile();
 int appendToFile();
 int overwriteToFile();
+bool fileExists(const char *fileName);
