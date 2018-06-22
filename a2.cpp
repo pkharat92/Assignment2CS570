@@ -17,7 +17,7 @@ int main()
 
 void displayMenu() {
 	
-	char c;
+	int c;
 	int i = 1;
 	
 	while(i == 1){
@@ -38,20 +38,20 @@ void displayMenu() {
 		
 		cout << endl;
 		
-		//if(!isdigit(c)){
-			
-			//cout << "Invalid argument, try again" << endl;
-			//continue;
-		//}
+		if(c < 1 && c > 7){
+			   
+			cout << "Invalid argument, try again";
+			continue;
+		}
 		
 		switch (c) {
-			case '1': createDirectory(); break;
-			case '2': createNewRegularFiles(); break;
-			case '3': readFromFile(); break;
-			case '4': if(writeToFile() == 1){continue;}; break;
-			case '5': printFileStatus(); break;
-			case '6': printDirectoryListing(); break;
-			case '7': return;
+			case 1: createDirectory(); break;
+			case 2: createNewRegularFiles(); break;
+			case 3: readFromFile(); break;
+			case 4: if(writeToFile() == 1){continue;}; break;
+			case 5: printFileStatus(); break;
+			case 6: printDirectoryListing(); break;
+			case 7: return;
 		} // End switch
 		
 		cout << "Type 1 for Menu or 0 for exit: ";
