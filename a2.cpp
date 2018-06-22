@@ -130,16 +130,16 @@ int readFromFile() {
 	    cout << infile.rdbuf() << endl; //Print to the screen
 	    infile.close();// Close file
 	    
-	    
-	    FILE *bFILE = fopen(strcat(str_cp,".bak"),"w");
-	    FILE * original = fopen(c,"r"); 
-	    int ch;
-	    
-	    while((ch = getc(original)) != EOF)
-			putc(ch,bFILE);
-	    fclose(bFILE);
-	    fclose(original);
-		
+	   if(!fileExists(strcat(str_cp,".bak"))){ //file does not exist 
+		    FILE *bFILE = fopen(str_cp,"w");
+		    FILE * original = fopen(c,"r"); 
+		    int ch;
+		    
+		    while((ch = getc(original)) != EOF)
+				putc(ch,bFILE);
+		    fclose(bFILE);
+		    fclose(original);
+		}
 	    cout << endl;
 		exit(0);
 	}
@@ -157,6 +157,7 @@ int readFromFile() {
 }
 
 int writeToFile() {
+	int numBytes;
 	char p;
 	char str_cp[256];
 	string filename;
@@ -196,8 +197,8 @@ int writeToFile() {
 		
 		
 		/*Creating the backup file*/
-		if(!fileExists(strcat(str_cp,".bak"))){ //file exists
-			FILE *bFILE = fopen(strcat(str_cp,".bak"),"w");
+		if(!fileExists(strcat(str_cp,".bak"))){ //file does not exist
+			FILE *bFILE = fopen(str_cp,"w");
 		    FILE * original = fopen(c,"r"); 
 		    int ch;
 		    
@@ -209,22 +210,39 @@ int writeToFile() {
 	    /*End*/
 		
 		if(pFile != NULL) {
-			cout << "What do you want to add or write to the file: " << endl;
-			cin.ignore();
-			getline(cin, str);
-			const char * cstr = str.c_str();
-			fputs(cstr, pFile);
-			fclose(pFile);
+			
+			if(p == '1'){ //Specify which byte
+				cout << "\nSpecify the amount of bytes: ";
+				cin >> numBytes;
+				cout << "\n\nWhat do you want to add or write to the file: " << endl;
+				cin.ignore();
+				getline(cin, str);
+				const char * cstr = str.c_str();
+				fseek (pFile, numBytes, SEEK_SET);
+				fputs(cstr, pFile);
+				fclose (pFile);
+			}
+			
+			else{
+				cout << "What do you want to add or write to the file: " << endl;
+				cin.ignore();
+				getline(cin, str);
+				const char * cstr = str.c_str();
+				fputs(cstr, pFile);
+				fclose(pFile);
+			}
 		}//End if
 		
-		cout<<endl;
+		
+		
+		cout << endl;
 		exit(0);
 		
 	}//End if
 	
 	else if(PID > 0){ //Parent process executes code here
 		wait(NULL);
-		PID2= fork();
+		/*PID2= fork();
 		if(PID2 == 0){//Child
 			
 			exit(0);
@@ -239,7 +257,7 @@ int writeToFile() {
 			else if(PID3 > 0){
 				
 			}
-		}
+		}*/
 	}
 	
 	else{

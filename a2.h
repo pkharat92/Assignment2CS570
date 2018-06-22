@@ -9,6 +9,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <vector>
+#include <cstdio>
 
 // Function prototypes
 void displayMenu();
