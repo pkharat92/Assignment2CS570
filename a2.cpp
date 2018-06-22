@@ -172,6 +172,7 @@ int writeToFile() {
 	string filename;
 	string str;
 	FILE * pFile;
+	FILE * bFILE;
 	vector <string> tokens;
 
 	cout << endl << endl;
@@ -205,26 +206,12 @@ int writeToFile() {
 		} // End switch
 		
 		
-		
-		/*Creating the backup file*/
-		if(!fileExists(strcat(str_cp,".bak"))){ //file does not exist
-			FILE *bFILE = fopen(str_cp,"w");
-		    FILE * original = fopen(c,"r"); 
-		    int ch;
-		    
-		    while((ch = getc(original)) != EOF)
-				putc(ch,bFILE);
-		    fclose(bFILE);
-		    fclose(original);
-		}
-	    /*End*/
-		
 		if(pFile != NULL) {
 			
 			if(p == '1'){ //Specify which byte
 				cout << "\nSpecify the amount of bytes: ";
 				cin >> numBytes;
-				cout << "\n\nWhat do you want to add or write to the file: " << endl;
+				cout << "\nWhat do you want to add or write to the file: " << endl;
 				cin.ignore();
 				getline(cin, str);
 				const char * cstr = str.c_str();
@@ -244,7 +231,25 @@ int writeToFile() {
 		}//End if
 		
 		
+		/*Check for the .bak file if exists erase the previous one*/
+	    bool exists = (bFILE = fopen(strcat(str_cp,".bak"),"w")); 
+	    
+		if(exists){ //.bak file exists
+		   
+		    remove(str_cp);
+		    fclose(bFILE); 
+		    bFILE = fopen(str_cp,"w");
+		}
 		
+		FILE * original = fopen(c,"r"); 
+	    int ch;
+	    
+	    while((ch = getc(original)) != EOF)
+			putc(ch,bFILE);
+	    fclose(bFILE);
+	    fclose(original);
+	    /*End*/
+			
 		cout << endl;
 		exit(0);
 		
