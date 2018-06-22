@@ -10,6 +10,7 @@
 #include <errno.h>
 #include <vector>
 #include <cstdio>
+#include <algorithm>
 
 // Function prototypes
 void displayMenu();
