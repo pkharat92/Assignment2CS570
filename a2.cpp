@@ -26,13 +26,11 @@ void displayMenu() {
 		cout << "Multi-Processing File Editor Menu" << endl << endl;
 		cout << "1. Create new directory files" << endl
 			 << "2. Create new regular files" << endl
-			 << "3. Create child process to write sorted output" << endl
-			 << "4. Create child process to shadow write/read regular files" << endl
-			 << "5. Read from a file (print out to stdout)" << endl
-			 << "6. Write to a file in either insert, append, or overwrite mode" << endl
-			 << "7. Print file status (print out to stdout)" << endl
-			 << "8. Print directory listing (contents of dir file) (print out to stdout)" << endl
-			 << "9. Exit" << endl << endl;
+			 << "3. Read from a file" << endl
+			 << "4. Write to a file" << endl
+			 << "5. Print file status" << endl
+			 << "6. Print directory listing" << endl
+			 << "7. Exit" << endl << endl;
 	
 		cout << "Please select an option: ";
 		
@@ -49,13 +47,11 @@ void displayMenu() {
 		switch (c) {
 			case '1': createDirectory(); break;
 			case '2': createNewRegularFiles(); break;
-			case '3': createChildProcess(); break;
-			case '4': createChildProcessShadow(); break;
-			case '5': readFromFile(); break;
-			case '6': writeToFile(); break;
-			case '7': printFileStatus(); break;
-			case '8': printDirectoryListing(); break;
-			case '9': return;
+			case '3': readFromFile(); break;
+			case '4': writeToFile(); break;
+			case '5': printFileStatus(); break;
+			case '6': printDirectoryListing(); break;
+			case '7': return;
 		} // End switch
 		
 		
@@ -66,7 +62,7 @@ void displayMenu() {
 		cout << endl;
 	}
 	
-	cout << "Have a nice day" << endl;
+	cout << "Have a nice day\n" << endl;
 } // End void displayMenu()
 
 void createDirectory() {
@@ -96,46 +92,80 @@ int createNewRegularFiles() {
 	const char * c = filename.c_str();
 	ofstream outfile(c);
 	
-	cout << "\nType what you want to write to file:\n\n";
-	cin.ignore();
-	getline(cin, str);
-	cout << "\n";
-	outfile << str << "\n";
+	cout << "\nFile: " << c << " created\n\n";
+	
+	//cout << "\nType what you want to write to file:\n\n";
+	//cin.ignore();
+	//getline(cin, str);
+	//cout << "\n";
+	//outfile << str << "\n";
 	outfile.close();
 		
 	return 0; 
 } // End createRegularFiles()
 
-void createChildProcess() {
+int readFromFile() {
 	
-    string filename;
+    string filename,str = "";
+    char str_cp[256];
 
-    cout << "Please enter the name of the file that will be sorted: ";
+    cout << "Please enter filename: ";
     cin >> filename;
+
+    const char * c = filename.c_str();
+
+	pid_t PID = fork(); //create child process
 	
-	pid_t PID = fork();
 	
-	if(PID < 0){
+	if(PID == 0){ //Child proccess executes code here
+	
+		strcpy(str_cp,c);
+		
+		// Open file
+	    ifstream infile;
+	    infile.open(c);
+	
+	    // Fail check
+	    if(infile.fail()) {
+	    
+			cout << "Cannot open file.\n";
+			exit(1);
+	    
+	    } // End if
+	    
+	    cout << infile.rdbuf() << endl; //Print to the screen
+	    infile.close();// Close file
+	    
+	    
+	    FILE *bFILE = fopen(strcat(str_cp,".bak"),"w");
+	    FILE * original = fopen(c,"r"); 
+	    int ch;
+	    
+	    while((ch = getc(original)) != EOF)
+			putc(ch,bFILE);
+	    fclose(bFILE);
+	    fclose(original);
+		
+	    cout << endl;
+		exit(0);
+	}
+	
+	else if(PID > 0){ //Parent process executes code here
+		wait(NULL);
+	}
+	
+	else{
 		
 		perror("fork() error");
 		exit(-1);		
 	}
-	
-	else if(PID == 0){ //Child proccess executes code here
-	
 
-	}
-	
-	else{ //Parent process executes code here
-		
-		
-	}
-	
+    return 0;
 }
 
 void createChildProcessShadow() {}
 
-int readFromFile() {
+/*int readFromFile() {
     string filename;
 
     cout << "Please enter filename: ";
@@ -162,9 +192,9 @@ int readFromFile() {
     infile.close();
     cout << endl;
 
-    return 0;
+return 0;
 } // End readFromFile()
-
+*/
 int writeToFile() {
 	char c;
 

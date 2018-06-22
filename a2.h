@@ -14,7 +14,7 @@
 void displayMenu();
 void createDirectory();
 int createNewRegularFiles();
-void createChildProcess();
+int createChildProcess();
 void createChildProcessShadow();
 int readFromFile();
 int writeToFile();
