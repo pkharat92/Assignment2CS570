@@ -163,6 +163,7 @@ int writeToFile() {
 	string filename;
 	string str;
 	FILE * pFile;
+	vector <string> tokens;
 
 	cout << endl << endl;
 	cout << "Multi-Processing File Editor Menu" << endl << endl;
@@ -244,13 +245,6 @@ int writeToFile() {
 		wait(NULL);
 		PID2= fork();
 		if(PID2 == 0){//Child
-			string filename, str = "";
-					
-   			cout << "Please enter filename: ";
-    			cin >> filename;
-			
-   			const char * c = filename.c_str();
-	
 			// Open file
 	    		ifstream infile;
 	   		infile.open(c);
@@ -261,21 +255,22 @@ int writeToFile() {
 				exit(1);
 	    	    	} // End if
 	    
-			
-			// Get input from file
-			string line, intermediate, filename2;
+			// Get content from file
+			string line, intermediate;
 	    		line = infile.rdbuf();
-			vector <string> tokens;
+				
+			// Tokenize the line
 			stringstream check1(line);
 			
-			// This is used to sort the tokens array
+			// Creates a new file to place the sorted contents into
+			string filename2 = filename + "_sortAsc";
+			const char * c2 = filename2.c_str();
+			ofstream outfile(c2);
+			
+			// This is used to sort the tokens
 			struct myclass {
   				bool operator() (int i,int j) { return (i<j);}
 			} myobject;
-			
-			filename2 = filename + "_sortAsc";
-			const char * c = filename2.c_str();
-			ofstream outfile(c);
 			
 			while(getline(check1, intermediate, ' ')) {
 				tokens.pushback(intermediate);
@@ -283,18 +278,31 @@ int writeToFile() {
 			
 			sort (tokens.begin(), tokens.end(), myobject);  
 			
+			// Writes the sorted contents to the new file
 			for(int i = 0; i < tokens.size(); i++) {
 				outfile << tokens[i] << '\n';
 			} // End for
 			
 	   		infile.close();// Close file
+			outfile.cose();
 			exit(0);
 		}
 		else if(PID2 > 0){//Parent
 			wait(NULL);
 			PID3= fork();
 			if(PID3 == 0){
+				// Creates a new file to place the sorted contents into
+				string filename3 = filename + "_sortDesc";
+				const char * c3 = filename3.c_str();
+				ofstream outfile(c3);
 				
+				// Writes the sorted contents to the new file
+				reverse(tokens.begin(), tokens.end());
+				for(int i = 0; i < tokens.size(); i++) {
+					outfile << tokens[i] << '\n';
+				} // End for
+				
+				outfile.close();
 				exit(0);
 			} // End if
 			else if(PID3 > 0){
