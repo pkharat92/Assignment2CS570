@@ -109,7 +109,7 @@ int readFromFile() {
     const char * c = filename.c_str();
 
 	pid_t PID = fork(); //create child process
-	
+	FILE *bFILE;
 	
 	if(PID == 0){ //Child proccess executes code here
 	
@@ -130,16 +130,25 @@ int readFromFile() {
 	    cout << infile.rdbuf() << endl; //Print to the screen
 	    infile.close();// Close file
 	    
-	   if(!fileExists(strcat(str_cp,".bak"))){ //file does not exist 
-		    FILE *bFILE = fopen(str_cp,"w");
-		    FILE * original = fopen(c,"r"); 
-		    int ch;
-		    
-		    while((ch = getc(original)) != EOF)
-				putc(ch,bFILE);
-		    fclose(bFILE);
-		    fclose(original);
+	    /*Check for the .bak file if exists erase the previous one*/
+	    bool exists = (bFILE = fopen(strcat(str_cp,".bak"),"w")); 
+	    
+		if(exists){ //.bak file exists
+		   
+		    remove(str_cp);
+		    fclose(bFILE); 
+		    bFILE = fopen(str_cp,"w");
 		}
+		
+		FILE * original = fopen(c,"r"); 
+	    int ch;
+	    
+	    while((ch = getc(original)) != EOF)
+			putc(ch,bFILE);
+	    fclose(bFILE);
+	    fclose(original);
+	    /*End*/
+	    
 	    cout << endl;
 		exit(0);
 	}
@@ -243,7 +252,7 @@ int writeToFile() {
 	
 	else if(PID > 0){ //Parent process executes code here
 		wait(NULL);
-		PID2= fork();
+		/*PID2= fork();
 		if(PID2 == 0){//Child
 			// Open file
 	    		ifstream infile;
@@ -308,7 +317,7 @@ int writeToFile() {
 			else if(PID3 > 0){
 				
 			} // End else if
-		} // End else if
+		}*/ // End else if
 	} // End else if
 	
 	else{
