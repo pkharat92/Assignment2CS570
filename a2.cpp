@@ -109,7 +109,7 @@ int readFromFile() {
     const char * c = filename.c_str();
 
 	pid_t PID = fork(); //create child process
-	FILE *bFILE;
+	
 	
 	if(PID == 0){ //Child proccess executes code here
 	
@@ -130,25 +130,16 @@ int readFromFile() {
 	    cout << infile.rdbuf() << endl; //Print to the screen
 	    infile.close();// Close file
 	    
-	    /*Check for the .bak file if exists erase the previous one*/
-	    bool exists = (bFILE = fopen(strcat(str_cp,".bak"),"w")); 
-	    
-		if(exists){ //.bak file exists
-		   
-		    remove(str_cp);
-		    fclose(bFILE); 
-		    bFILE = fopen(str_cp,"w");
+	   if(!fileExists(strcat(str_cp,".bak"))){ //file does not exist 
+		    FILE *bFILE = fopen(str_cp,"w");
+		    FILE * original = fopen(c,"r"); 
+		    int ch;
+		    
+		    while((ch = getc(original)) != EOF)
+				putc(ch,bFILE);
+		    fclose(bFILE);
+		    fclose(original);
 		}
-		
-		FILE * original = fopen(c,"r"); 
-	    int ch;
-	    
-	    while((ch = getc(original)) != EOF)
-			putc(ch,bFILE);
-	    fclose(bFILE);
-	    fclose(original);
-	    /*End*/
-	    
 	    cout << endl;
 		exit(0);
 	}
@@ -172,8 +163,6 @@ int writeToFile() {
 	string filename;
 	string str;
 	FILE * pFile;
-	FILE * bFILE;
-	vector <string> tokens;
 
 	cout << endl << endl;
 	cout << "Multi-Processing File Editor Menu" << endl << endl;
@@ -206,12 +195,26 @@ int writeToFile() {
 		} // End switch
 		
 		
+		
+		/*Creating the backup file*/
+		if(!fileExists(strcat(str_cp,".bak"))){ //file does not exist
+			FILE *bFILE = fopen(str_cp,"w");
+		    FILE * original = fopen(c,"r"); 
+		    int ch;
+		    
+		    while((ch = getc(original)) != EOF)
+				putc(ch,bFILE);
+		    fclose(bFILE);
+		    fclose(original);
+		}
+	    /*End*/
+		
 		if(pFile != NULL) {
 			
 			if(p == '1'){ //Specify which byte
 				cout << "\nSpecify the amount of bytes: ";
 				cin >> numBytes;
-				cout << "\nWhat do you want to add or write to the file: " << endl;
+				cout << "\n\nWhat do you want to add or write to the file: " << endl;
 				cin.ignore();
 				getline(cin, str);
 				const char * cstr = str.c_str();
@@ -231,98 +234,82 @@ int writeToFile() {
 		}//End if
 		
 		
-		/*Check for the .bak file if exists erase the previous one*/
-	    bool exists = (bFILE = fopen(strcat(str_cp,".bak"),"w")); 
-	    
-		if(exists){ //.bak file exists
-		   
-		    remove(str_cp);
-		    fclose(bFILE); 
-		    bFILE = fopen(str_cp,"w");
-		}
 		
-		FILE * original = fopen(c,"r"); 
-	    int ch;
-	    
-	    while((ch = getc(original)) != EOF)
-			putc(ch,bFILE);
-	    fclose(bFILE);
-	    fclose(original);
-	    /*End*/
-			
 		cout << endl;
 		exit(0);
 		
 	}//End if
 	
 	else if(PID > 0){ //Parent process executes code here
-		wait(NULL);
-		/*PID2= fork();
+    // Creates a new file to place the sorted contents into
+		string filename2 = filename + "_sortAsc";
+		const char * c2 = filename2.c_str();
+		ofstream outfile(c2);
+
+  	wait(NULL);
+		PID2= fork();
 		if(PID2 == 0){//Child
 			// Open file
-	    		ifstream infile;
-	   		infile.open(c);
-	
-	    		// Fail check
-	    		if(infile.fail()) {
-				cout << "Cannot open file.\n";
-				exit(1);
-	    	    	} // End if
-	    
-			// Get content from file
-			string line, intermediate;
-	    		line = infile.rdbuf();
-				
-			// Tokenize the line
-			stringstream check1(line);
+      int i = 0;
+      string line;
+      string arry[15];
+	    ifstream infile(c);
+      if(infile.is_open()) {
+        while(getline(infile, line)) {
+          stringstream linestream(line);
+          string item;
+          while(getline(linestream, item, ' ')) {
+              arry[i] = item;
+              i++;
+          } // End while
+          int n = sizeof(arry)/sizeof(arry[0]);
+          sort(arry, arry + n);
+          for(int i = 0; i < n; i++)
+            outfile << arry[i] << endl;
+        } // End while
+      } // End if
 			
-			// Creates a new file to place the sorted contents into
-			string filename2 = filename + "_sortAsc";
-			const char * c2 = filename2.c_str();
-			ofstream outfile(c2);
-			
-			// This is used to sort the tokens
-			struct myclass {
-  				bool operator() (int i,int j) { return (i<j);}
-			} myobject;
-			
-			while(getline(check1, intermediate, ' ')) {
-				tokens.pushback(intermediate);
-			} // End while
-			
-			sort (tokens.begin(), tokens.end(), myobject);  
-			
-			// Writes the sorted contents to the new file
-			for(int i = 0; i < tokens.size(); i++) {
-				outfile << tokens[i] << '\n';
-			} // End for
-			
-	   		infile.close();// Close file
-			outfile.cose();
+	   	infile.close();// Close file
+			outfile.close();
 			exit(0);
 		}
 		else if(PID2 > 0){//Parent
+      string filename3 = filename + "_sortDesc";
+		  const char * c3 = filename3.c_str();
+		  ofstream outfile(c3);
+
 			wait(NULL);
 			PID3= fork();
 			if(PID3 == 0){
-				// Creates a new file to place the sorted contents into
-				string filename3 = filename + "_sortDesc";
-				const char * c3 = filename3.c_str();
-				ofstream outfile(c3);
-				
-				// Writes the sorted contents to the new file
-				reverse(tokens.begin(), tokens.end());
-				for(int i = 0; i < tokens.size(); i++) {
-					outfile << tokens[i] << '\n';
-				} // End for
-				
-				outfile.close();
-				exit(0);
+				// Open file
+        int i = 0;
+        string line;
+        string arry[15];
+	      ifstream infile(c);
+        if(infile.is_open()) {
+          while(getline(infile, line)) {
+            stringstream linestream(line);
+            string item;
+            while(getline(linestream, item, ' ')) {
+              arry[i] = item;
+              i++;
+            } // End while
+          int n = sizeof(arry)/sizeof(arry[0]);
+          sort(arry, arry + n);
+          reverse(arry, arry + n);
+          for(int i = 0; i < n; i++)
+            outfile << arry[i] << endl;
+          } // End while
+      } // End if
+			
+	   	infile.close();// Close file
+			outfile.close();
+			exit(0);
 			} // End if
 			else if(PID3 > 0){
 				
 			} // End else if
-		}*/ // End else if
+		} // End else if
 	} // End else if
 	
 	else{
@@ -413,3 +400,11 @@ int printDirectoryListing() {
 	return 0;
 } // End printDirectoryListing()
 
+/*
+ * Check if a file exists already 
+ */
+bool fileExists(const char *fileName)
+{
+    std::ifstream infile(fileName);
+    return infile.good();
+}
