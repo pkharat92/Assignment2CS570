@@ -34,3 +34,12 @@ Design Decisions
 
 - We created a menu with seven different options, allowing for the user to read from
  and write to a file, among other things.
+ 
+ Work organization
+ 
+ -Alfonso Herrera: Worked on the creation of the CreateDirectory function as well as 
+ the readFromFile function and the writeToFile function in which the both of us worked.
+ Also, I created the function that makes the ".bak" file in all of the specified cases.
+ We both reviewed and edited the code from each other in order to obtain a better result.
+ 
+ -Pierre Kharat:
