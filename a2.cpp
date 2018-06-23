@@ -51,7 +51,7 @@ void displayMenu() {
 			case 4: if(writeToFile() == 1){continue;}; break;
 			case 5: printFileStatus(); break;
 			case 6: printDirectoryListing(); break;
-			case 7: return;
+			case 7: cout << "Have a nice day\n" << endl; return;
 		} // End switch
 		
 		cout << "Type 1 for Menu or 0 for exit: ";
