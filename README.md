@@ -42,4 +42,7 @@ Design Decisions
  Also, I created the function that makes the ".bak" file in all of the specified cases.
  We both reviewed and edited the code from each other in order to obtain a better result.
  
- -Pierre Kharat:
+ -Pierre Kharat: Worked on the writeToFile function, which both of us worked on. Worked on 
+ the sorting of the contents of the file and placement of the contents into different files.
+ Worked on the createRegularFiles function, allowing for regular files such as .txt and .dat 
+ files to be created. Also created the menu for the entire program.
