@@ -413,11 +413,3 @@ int printDirectoryListing() {
 	return 0;
 } // End printDirectoryListing()
 
-/*
- * Check if a file exists already 
- */
-bool fileExists(const char *fileName)
-{
-    std::ifstream infile(fileName);
-    return infile.good();
-}

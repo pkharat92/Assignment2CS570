@@ -24,4 +24,3 @@ int printDirectoryListing();
 int insertInFile();
 int appendToFile();
 int overwriteToFile();
-bool fileExists(const char *fileName);
